@@ -16,10 +16,11 @@ jobs:
 
     - name: get key hash
       env:
+        RELEASE_KEY_NAME: ${{ secrets.RELEASE_KEY_NAME }}
         RELEASE_KEY_ALIAS: ${{ secrets.RELEASE_KEY_ALIAS }}
         RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
       run: |
-        export keyHash=$(keytool -exportcert -alias ${{ env.RELEASE_KEY_ALIAS }} -keystore ./test.jks -storepass ${{ env.RELEASE_KEY_PASSWORD }} | openssl sha1 -binary | openssl base64)
+        export keyHash=$(keytool -exportcert -alias ${{ env.RELEASE_KEY_ALIAS }} -keystore ./${{ env.RELEASE_KEY_NAME }} -storepass ${{ env.RELEASE_KEY_PASSWORD }} | openssl sha1 -binary | openssl base64)
         echo "::set-env name=keyHash::$keyHash"
     - name: print key hash
       run: echo ${keyHash}
