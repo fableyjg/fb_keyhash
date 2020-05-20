@@ -4,7 +4,7 @@ on: push
 jobs:
   build:
     name: release
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     if: "contains(github.event.head_commit.message, 'keyhash')"
     steps:
     - uses: actions/checkout@v2
